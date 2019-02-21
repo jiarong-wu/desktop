@@ -1,0 +1,5 @@
+2.18:
+
+Continue on correlating critical layer height and energy growth rate.
+1. critical_layer executable for retrieve dump file and output_field u.x and pos. Had to manually mv dump_certaintime to dump_certaintime_corrupted suspecting some dump files were not written correctly.
+2. NOTICE: To make things easier for pandas read-in, changed the output_field header format in $BASILISK/src/output.h
