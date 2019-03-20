@@ -24,18 +24,17 @@ int outfield (int i) {
   coord G = {0.,1.,0.}, Z = {0.,0.,0.};
 #endif
   position (f, pos, G, Z);
-  scalar m[];  //define the mask for plotting
-    
-  /**
-     foreach() {
-     if (pos[]!=nodata)
-     fprintf (fpeta, "%g,%g\n", x, pos[]);
-     }
-  */
-
-  sprintf (fieldname, "fieldnl%d", i);
+  scalar FirOrder[];
+  scalar SecOrder[];
+  foreach() {
+    FirOrder[] = (u.x[0,1] - u.x[0,-1])/(2.*Delta);
+  }
+  foreach() {
+    SecOrder[] = (FirOrder[0,1] - FirOrder[0,-1])/(2.*Delta);
+  }
+  sprintf (fieldname, "field%d", i);
   FILE * ffield = fopen (fieldname, "w");
-  output_field ({u.x, pos}, ffield, n = 128); // linear = true
+  output_field ({u.x, pos, FirOrder, SecOrder}, ffield, n = 128); // linear = true
   fclose (ffield);
   sprintf (etaname, "eta%d", i);
   FILE * feta = fopen (etaname, "w");

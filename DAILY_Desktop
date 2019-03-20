@@ -1,0 +1,18 @@
+02.18:
+
+Continue on correlating critical layer height and energy growth rate.
+1. critical_layer executable for retrieve dump file and output_field u.x and pos. Had to manually mv dump_certaintime to dump_certaintime_corrupted suspecting some dump files were not written correctly.
+2. NOTICE: To make things easier for pandas read-in, changed the output_field header format in $BASILISK/src/output.h
+
+02.28:
+Test if by setting USTAR smaller we can have the critical layer outside of the linear part.
+
+03.04:
+Start from where was left on 2.28. Revisited the profile parameters. Ustar<0.3 doesn't produce any growth.
+1. Specify even greater Ustar and smaller m.
+2. The posibility of following Zeisel on using a numerically computed profile as initialization.
+3. Improve the basilisk function of retrieving the flow field structure especially at small curvature/gradient position.
+
+03.18-19:
+1. When setting the global variables, better use capital letters.
+2. event end is not a special function. The function run() stops when all the events have been run. To quit run(), just put a "return;" in any event defined. t = end is a reserved keyword.

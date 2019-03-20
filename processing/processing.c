@@ -12,6 +12,7 @@
 #include "curvature.h"
 #include "vof.h"
 
+
 int outfiled (int i);
 int direct (double X, int i, char *name);
 int shear (int i);
