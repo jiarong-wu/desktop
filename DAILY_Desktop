@@ -16,3 +16,9 @@ Start from where was left on 2.28. Revisited the profile parameters. Ustar<0.3 d
 03.18-19:
 1. When setting the global variables, better use capital letters.
 2. event end is not a special function. The function run() stops when all the events have been run. To quit run(), just put a "return;" in any event defined. t = end is a reserved keyword.
+3. Somehow the restoring dump file then run thing didn/t work. Will resume tomorrow.
+4. Run two cases where both Re and Bo match with Zeisel's on adroit. Will process tomorrow.
+
+03.21:
+1. Found that set the Re number wrong in last two cases so discarded result.
+2. Reset the Re number. Also set two cases corresponding to Zeisel's FIGURE4.
