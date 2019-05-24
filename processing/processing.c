@@ -41,7 +41,7 @@ int direct (double X, int i, char *name) {
     if ((x > X - Delta) && (x < X + Delta) && (posy[] != nodata))
       Y = posy[];
     double dudy = (u.x[0,1] - u.x[0,-1])/(2*Delta);
-    tau_xy[] = (MU1*f[] + MU2*(1-f[]))*dudy;
+    tau_xy[] = (MU1*f[] + MU2*(1-f[]))*dudy; // This is serious wrong!!! Density??
   }
 
   // refine the column

@@ -22,3 +22,7 @@ Start from where was left on 2.28. Revisited the profile parameters. Ustar<0.3 d
 03.21:
 1. Found that set the Re number wrong in last two cases so discarded result.
 2. Reset the Re number. Also set two cases corresponding to Zeisel's FIGURE4.
+
+04.06:
+1. Added pressure gradient to the simulation. Spent quite sometime cleaning up the data because it appended to the budget file instead of rewrite.
+2. Only multigrid worked with pressure gradient. Why?

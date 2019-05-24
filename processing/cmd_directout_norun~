@@ -1,0 +1,6 @@
+
+
+#!/bin/bash
+NUMBER = 32
+TIME = 2
+./directout_norun $NUMBER $TIME

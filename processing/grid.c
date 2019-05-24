@@ -13,7 +13,7 @@
 #include "vof.h"
 
 
-void outfield (int i) {
+void outfield (double time) {
   
   char fieldname[100], etaname[100];
   scalar pos[];
@@ -29,11 +29,11 @@ void outfield (int i) {
     FirOrder[] = (u.x[0,1] - u.x[0,-1])/(2.*Delta);
   foreach() 
     SecOrder[] = (FirOrder[0,1] - FirOrder[0,-1])/(2.*Delta);
-  sprintf (fieldname, "field%d", i);
+  sprintf (fieldname, "field%g", time);
   FILE * ffield = fopen (fieldname, "w");
   output_field ({u.x, pos, FirOrder, SecOrder}, ffield, n = 2048); // linear = true
   fclose (ffield);
-  sprintf (etaname, "eta%d", i);
+  sprintf (etaname, "eta%g", time);
   FILE * feta = fopen (etaname, "w");
   foreach(){
     if (interfacial (point, f)) 
@@ -43,17 +43,19 @@ void outfield (int i) {
   // return 0;
 }
 
-double snapshot_time;
-int INDEX;
+int NUMBER = 32; // Time gap in taking the snapshots
+double TIME = 2; // Total number of run time
+double snapshot_time; // Current snapshot time
 double uemax = 0.0000001;
 double femax = 0.0000001;
 int LEVEL = 12;
 int counting = 0;
 
+/* All the constant that comes with the case, will be changed after input */
 double ak = 0.05;
 double BO = 200.;
 double RE = 40000.;
-
+double PRESSURE = 0;
 double m = 5.;  // vary between 5 and 8
 double B = 0.;
 double Karman = 0.41;   // Karman universal turbulence constant
@@ -83,10 +85,12 @@ int main (int argc, char * argv[])
   if (argc > 7)
     UstarRATIO = atof(argv[7]);
   if (argc > 8)
-    snapshot_time = atof(argv[8]);
-
+    PRESSURE = atof(argv[8]);
+  
   origin (-L0/2, -L0/2, -L0/2);
   periodic (right);
+  p[left] = dirichlet(PRESSURE);
+  p[right] = dirichlet(0); 
   u.n[top] = dirichlet(0);
   u.t[top] = neumann(0);
 
@@ -97,23 +101,17 @@ int main (int argc, char * argv[])
   f.sigma = 1./(BO*sq(k_));
   G.y = -g_;
 
-	double PERIOD = 1/32.;
-	INDEX = snapshot_time/PERIOD; 
-	printf("INDEX=%d\n", INDEX);
-	// outfield(INDEX);
-	run();
-    return 0;
+  for (int i = 0; i < (TIME*NUMBER); i++)
+  {
+    snapshot_time = i * 1 / (double)NUMBER;
+    printf("Run starts!\n"); 
+    run();
+    printf("Run ends!\n"); 
+  }
+
+  return 0;
 }
 
-
-
-// event something (t = end) {
-// 	fprintf(stdout, "%g %d\n", t, i);
-
-// 		outfield(INDEX);
-// 		// fprintf(stdo ut, "%g %d\n", t, i);
-// 		// return 0;
-// }
 event init (i = 0)
 {
   char targetname[100];
@@ -132,5 +130,5 @@ event end (i = 10) {
 }
 
 event finalize (t = end) {
-	outfield(INDEX);
+	outfield(snapshot_time);
 }
